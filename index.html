@@ -1,85 +1,25 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CloudFlare-ImgBed | 现代化图片托管</title>
-<link rel="icon" href="/logo.png">
-<link rel="apple-touch-icon" href="/logo.png">
-<link rel="mask-icon" href="/logo.png" color="#6366f1">
-<link rel="stylesheet" href="style.css">
-<script defer src="/js/app.42f0e844.js"></script>
-</head>
-<body>
-<header>
-    <div class="container">
-        <nav class="navbar">
-            <a href="#" class="logo"><img src="logo.png" alt="Logo"><span>CloudFlare-ImgBed</span></a>
-            <div class="nav-links">
-                <a href="#" class="nav-link">首页</a>
-                <a href="#" class="nav-link">图库</a>
-                <a href="#" class="nav-link">文档</a>
-                <a href="#" class="nav-link">设置</a>
-                <a href="#" class="btn btn-outline">登录</a>
-            </div>
-        </nav>
-    </div>
-</header>
+<!doctype html><html lang=""><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="/logo.png"><link rel="apple-touch-icon" href="/logo.png"><link rel="mask-icon" href="/logo.png" color="#f4b400"><meta name="description" content="Sanyue ImgHub - A modern file hosting platform"><meta name="keywords" content="Sanyue, ImgHub, file hosting, image hosting, cloud storage"><meta name="author" content="SanyueQi"><title>Sanyue ImgHub</title><script defer="defer" src="/js/app.42f0e844.js"></script><link href="/css/app.6e9711cc.css" rel="stylesheet"></head><body><noscript><strong>We're sorry but sanyue_imghub doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"></div></body></html><style>/* 下拉菜单样式 */
+.el-dropdown__popper.el-popper {
+    border-radius: 12px;
+    border: none;
+    background-color: var(--popper-bg-color);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--popper-shadow);
+}
+.el-dropdown__popper.el-popper .el-dropdown-menu {
+    background: none;
+    border: none;
+}
+.el-dropdown__popper.el-popper .el-dropdown-menu__item {
+    border: none;
+    background: none;
+}
+.el-popper.is-light>.el-popper__arrow::before {
+    background: none;
+    border: none;
+}
 
-<main class="container">
-    <section class="hero">
-        <h1>简单高效的图片托管解决方案</h1>
-        <p>基于CloudFlare Workers开发的图床应用，提供快速、稳定的图片上传与管理服务</p>
-    </section>
-
-    <section class="upload-section">
-        <h2>上传图片</h2>
-        <div class="upload-area" id="uploadArea">
-            <div class="upload-icon">📁</div>
-            <p class="upload-text">拖放图片到此处，或点击选择文件</p>
-            <p class="upload-hint">支持JPG, PNG, GIF, WebP格式，最大10MB</p>
-        </div>
-        <div style="text-align:center;">
-            <button class="btn btn-primary">开始上传</button>
-        </div>
-    </section>
-
-    <section class="files-section">
-        <div class="section-header">
-            <h2 class="section-title">最近上传</h2>
-            <button class="btn btn-outline">管理图片</button>
-        </div>
-        <div class="file-grid">
-            <div class="file-card">
-                <div class="file-thumb"><img src="https://via.placeholder.com/300" alt="示例"></div>
-                <div class="file-info"><div class="file-name">example.jpg</div><div class="file-meta"><span>2.4 MB</span><span>3天前</span></div></div>
-            </div>
-            <div class="file-card">
-                <div class="file-thumb"><img src="https://via.placeholder.com/300/ff0000" alt="示例"></div>
-                <div class="file-info"><div class="file-name">red.png</div><div class="file-meta"><span>1.8 MB</span><span>1周前</span></div></div>
-            </div>
-        </div>
-    </section>
-</main>
-
-<footer>
-    <div class="container">
-        <p>© 2025 CloudFlare-ImgBed. 基于MIT许可证开源。</p>
-    </div>
-</footer>
-
-<script>
-// 文件上传交互逻辑
-const uploadArea = document.getElementById('uploadArea');
-uploadArea.addEventListener('click',()=>console.log('打开文件选择'));
-['dragenter','dragover','dragleave','drop'].forEach(e=>uploadArea.addEventListener(e,preventDefaults,false));
-function preventDefaults(e){ e.preventDefault(); e.stopPropagation(); }
-['dragenter','dragover'].forEach(e=>uploadArea.addEventListener(e,()=>uploadArea.classList.add('drag-over')));
-['dragleave','drop'].forEach(e=>uploadArea.addEventListener(e,()=>uploadArea.classList.remove('drag-over')));
-uploadArea.addEventListener('drop',e=>{
-    const files=e.dataTransfer.files;
-    console.log('文件已拖放:',files);
-});
-</script>
-</body>
-</html>
+/* 加载动画样式 */
+.el-loading-mask {
+    border-radius: 12px;
+}</style>
