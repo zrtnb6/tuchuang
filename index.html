@@ -1,366 +1,85 @@
-<!doctype html><html lang=""><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="/logo.png"><link rel="apple-touch-icon" href="/logo.png"><link rel="mask-icon" href="/logo.png" color="#3b82f6"><meta name="description" content="CloudFlare ImgBed - A modern file hosting platform"><meta name="keywords" content="CloudFlare, ImgBed, file hosting, image hosting, cloud storage"><meta name="author" content="MarSeventh"><title>CloudFlare ImgBed</title><script defer="defer" src="/js/app.42f0e844.js"></script><link href="/css/app.6e9711cc.css" rel="stylesheet"></head><body><noscript><strong>We're sorry but CloudFlare ImgBed doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"></div></body></html><style>:root {
-    /* 主题颜色 - 现代简约蓝色调 */
-    --primary-color: #3b82f6;
-    --primary-color-light: #60a5fa;
-    --primary-color-dark: #2563eb;
-    --success-color: #10b981;
-    --warning-color: #f59e0b;
-    --error-color: #ef4444;
-    --info-color: #3b82f6;
-    
-    /* 中性色 */
-    --text-color: #1e293b;
-    --text-color-secondary: #64748b;
-    --text-color-disabled: #94a3b8;
-    --bg-color: #ffffff;
-    --bg-color-secondary: #f8fafc;
-    --bg-color-tertiary: #e2e8f0;
-    --border-color: #cbd5e1;
-    --border-color-light: #e2e8f0;
-    
-    /* 阴影 */
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-    
-    /* 圆角 */
-    --border-radius-sm: 4px;
-    --border-radius: 6px;
-    --border-radius-md: 8px;
-    --border-radius-lg: 12px;
-    --border-radius-xl: 16px;
-    
-    /* 过渡 */
-    --transition: all 0.2s ease-in-out;
-    --transition-slow: all 0.3s ease-in-out;
-    
-    /* 下拉菜单样式 */
-    --popper-bg-color: rgba(255, 255, 255, 0.95);
-    --popper-shadow: var(--shadow-lg);
-}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CloudFlare-ImgBed | 现代化图片托管</title>
+<link rel="icon" href="/logo.png">
+<link rel="apple-touch-icon" href="/logo.png">
+<link rel="mask-icon" href="/logo.png" color="#6366f1">
+<link rel="stylesheet" href="style.css">
+<script defer src="/js/app.42f0e844.js"></script>
+</head>
+<body>
+<header>
+    <div class="container">
+        <nav class="navbar">
+            <a href="#" class="logo"><img src="logo.png" alt="Logo"><span>CloudFlare-ImgBed</span></a>
+            <div class="nav-links">
+                <a href="#" class="nav-link">首页</a>
+                <a href="#" class="nav-link">图库</a>
+                <a href="#" class="nav-link">文档</a>
+                <a href="#" class="nav-link">设置</a>
+                <a href="#" class="btn btn-outline">登录</a>
+            </div>
+        </nav>
+    </div>
+</header>
 
-/* 暗色主题 */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --text-color: #f8fafc;
-        --text-color-secondary: #94a3b8;
-        --text-color-disabled: #64748b;
-        --bg-color: #0f172a;
-        --bg-color-secondary: #1e293b;
-        --bg-color-tertiary: #334155;
-        --border-color: #475569;
-        --border-color-light: #334155;
-        --popper-bg-color: rgba(15, 23, 42, 0.95);
-        --popper-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.2);
-    }
-}
+<main class="container">
+    <section class="hero">
+        <h1>简单高效的图片托管解决方案</h1>
+        <p>基于CloudFlare Workers开发的图床应用，提供快速、稳定的图片上传与管理服务</p>
+    </section>
 
-/* 全局样式重置和基础设置 */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+    <section class="upload-section">
+        <h2>上传图片</h2>
+        <div class="upload-area" id="uploadArea">
+            <div class="upload-icon">📁</div>
+            <p class="upload-text">拖放图片到此处，或点击选择文件</p>
+            <p class="upload-hint">支持JPG, PNG, GIF, WebP格式，最大10MB</p>
+        </div>
+        <div style="text-align:center;">
+            <button class="btn btn-primary">开始上传</button>
+        </div>
+    </section>
 
-body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-size: 14px;
-    line-height: 1.5;
-    color: var(--text-color);
-    background-color: var(--bg-color);
-    transition: var(--transition);
-}
+    <section class="files-section">
+        <div class="section-header">
+            <h2 class="section-title">最近上传</h2>
+            <button class="btn btn-outline">管理图片</button>
+        </div>
+        <div class="file-grid">
+            <div class="file-card">
+                <div class="file-thumb"><img src="https://via.placeholder.com/300" alt="示例"></div>
+                <div class="file-info"><div class="file-name">example.jpg</div><div class="file-meta"><span>2.4 MB</span><span>3天前</span></div></div>
+            </div>
+            <div class="file-card">
+                <div class="file-thumb"><img src="https://via.placeholder.com/300/ff0000" alt="示例"></div>
+                <div class="file-info"><div class="file-name">red.png</div><div class="file-meta"><span>1.8 MB</span><span>1周前</span></div></div>
+            </div>
+        </div>
+    </section>
+</main>
 
-/* 下拉菜单样式 */
-.el-dropdown__popper.el-popper {
-    border-radius: var(--border-radius-md);
-    border: 1px solid var(--border-color);
-    background-color: var(--popper-bg-color);
-    backdrop-filter: blur(10px);
-    box-shadow: var(--popper-shadow);
-}
+<footer>
+    <div class="container">
+        <p>© 2025 CloudFlare-ImgBed. 基于MIT许可证开源。</p>
+    </div>
+</footer>
 
-.el-dropdown__popper.el-popper .el-dropdown-menu {
-    background: none;
-    border: none;
-}
-
-.el-dropdown__popper.el-popper .el-dropdown-menu__item {
-    border: none;
-    background: none;
-    transition: var(--transition);
-    padding: 8px 16px;
-    margin: 2px 0;
-    border-radius: var(--border-radius-sm);
-}
-
-.el-dropdown__popper.el-popper .el-dropdown-menu__item:hover {
-    background-color: var(--bg-color-secondary);
-    color: var(--primary-color);
-}
-
-.el-popper.is-light>.el-popper__arrow::before {
-    background: var(--popper-bg-color);
-    border: 1px solid var(--border-color);
-}
-
-/* 加载动画样式 */
-.el-loading-mask {
-    border-radius: var(--border-radius-md);
-    background-color: rgba(255, 255, 255, 0.8);
-}
-
-@media (prefers-color-scheme: dark) {
-    .el-loading-mask {
-        background-color: rgba(15, 23, 42, 0.8);
-    }
-}
-
-/* 按钮样式 */
-.el-button {
-    border-radius: var(--border-radius);
-    padding: 8px 16px;
-    font-weight: 500;
-    transition: var(--transition);
-    border: 1px solid transparent;
-}
-
-.el-button--primary {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
-}
-
-.el-button--primary:hover {
-    background-color: var(--primary-color-dark);
-    border-color: var(--primary-color-dark);
-}
-
-.el-button--success {
-    background-color: var(--success-color);
-    border-color: var(--success-color);
-}
-
-.el-button--warning {
-    background-color: var(--warning-color);
-    border-color: var(--warning-color);
-}
-
-.el-button--danger {
-    background-color: var(--error-color);
-    border-color: var(--error-color);
-}
-
-.el-button--default {
-    background-color: var(--bg-color-secondary);
-    border-color: var(--border-color);
-    color: var(--text-color);
-}
-
-.el-button--default:hover {
-    background-color: var(--bg-color-tertiary);
-    border-color: var(--border-color);
-    color: var(--text-color);
-}
-
-/* 卡片样式 */
-.el-card {
-    border-radius: var(--border-radius-lg);
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-sm);
-    background-color: var(--bg-color);
-    transition: var(--transition);
-}
-
-.el-card:hover {
-    box-shadow: var(--shadow-md);
-}
-
-.el-card__header {
-    border-bottom: 1px solid var(--border-color);
-    padding: 16px;
-}
-
-.el-card__body {
-    padding: 16px;
-}
-
-/* 输入框样式 */
-.el-input__inner,
-.el-textarea__inner {
-    border-radius: var(--border-radius);
-    border: 1px solid var(--border-color);
-    background-color: var(--bg-color);
-    transition: var(--transition);
-    padding: 8px 12px;
-}
-
-.el-input__inner:focus,
-.el-textarea__inner:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
-
-/* 表格样式 */
-.el-table {
-    border-radius: var(--border-radius-lg);
-    border: 1px solid var(--border-color);
-    overflow: hidden;
-}
-
-.el-table th {
-    background-color: var(--bg-color-secondary);
-    font-weight: 500;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.el-table td {
-    border-bottom: 1px solid var(--border-color-light);
-}
-
-.el-table tr:hover > td {
-    background-color: var(--bg-color-secondary);
-}
-
-/* 对话框样式 */
-.el-dialog {
-    border-radius: var(--border-radius-lg);
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-xl);
-    overflow: hidden;
-}
-
-.el-dialog__header {
-    border-bottom: 1px solid var(--border-color);
-    padding: 16px 24px;
-}
-
-.el-dialog__body {
-    padding: 24px;
-}
-
-.el-dialog__footer {
-    border-top: 1px solid var(--border-color-light);
-    padding: 16px 24px;
-}
-
-/* 消息提示样式 */
-.el-message {
-    border-radius: var(--border-radius);
-    padding: 12px 16px;
-    box-shadow: var(--shadow-md);
-}
-
-/* 标签样式 */
-.el-tag {
-    border-radius: var(--border-radius-sm);
-    padding: 4px 8px;
-    font-size: 12px;
-}
-
-/* 分页样式 */
-.el-pagination {
-    padding: 16px 0;
-}
-
-.el-pagination button,
-.el-pagination .el-pager li {
-    border-radius: var(--border-radius-sm);
-    transition: var(--transition);
-}
-
-.el-pagination .el-pager li:not(.disabled).active {
-    background-color: var(--primary-color);
-    color: white;
-}
-
-/* 主题切换按钮样式 */
-#themeToggle {
-    transition: var(--transition);
-}
-
-#themeToggle:hover {
-    transform: scale(1.1);
-}
-
-/* 背景图片样式 */
-.background-image1,
-.background-image2 {
-    filter: brightness(0.8);
-}
-
-/* 移动端响应式设计 */
-@media (max-width: 768px) {
-    .el-button {
-        padding: 6px 12px;
-        font-size: 12px;
-    }
-    
-    .el-card__header,
-    .el-card__body {
-        padding: 12px;
-    }
-    
-    .el-dialog {
-        margin: 16px;
-        width: auto !important;
-        max-width: 90vw;
-    }
-    
-    .el-dialog__header,
-    .el-dialog__body,
-    .el-dialog__footer {
-        padding: 16px;
-    }
-    
-    .el-input__inner,
-    .el-textarea__inner {
-        padding: 6px 10px;
-    }
-}
-
-/* 动画效果 */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.el-card,
-.el-button,
-.el-input,
-.el-table {
-    animation: fadeIn 0.3s ease-out;
-}
-
-/* 加载动画优化 */
-.el-loading-spinner .el-loading-text {
-    font-size: 14px;
-    color: var(--text-color-secondary);
-}
-
-/* 自定义滚动条 */
-::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--bg-color-secondary);
-    border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--border-color);
-    border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--text-color-disabled);
-}</style>
+<script>
+// 文件上传交互逻辑
+const uploadArea = document.getElementById('uploadArea');
+uploadArea.addEventListener('click',()=>console.log('打开文件选择'));
+['dragenter','dragover','dragleave','drop'].forEach(e=>uploadArea.addEventListener(e,preventDefaults,false));
+function preventDefaults(e){ e.preventDefault(); e.stopPropagation(); }
+['dragenter','dragover'].forEach(e=>uploadArea.addEventListener(e,()=>uploadArea.classList.add('drag-over')));
+['dragleave','drop'].forEach(e=>uploadArea.addEventListener(e,()=>uploadArea.classList.remove('drag-over')));
+uploadArea.addEventListener('drop',e=>{
+    const files=e.dataTransfer.files;
+    console.log('文件已拖放:',files);
+});
+</script>
+</body>
+</html>
