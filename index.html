@@ -1,56 +1,25 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cloudflare ImgBed</title>
-  <!-- 引入自定义样式 -->
-  <link rel="stylesheet" href="/css/custom.css" />
-</head>
-<body>
-  <!-- 顶部导航栏 -->
-  <header class="navbar">
-    <div class="logo">
-      <img src="/logo.png" alt="Logo" />
-      <h1>Cloudflare ImgBed</h1>
-    </div>
-    <nav>
-      <button id="theme-toggle">🌙 切换主题</button>
-    </nav>
-  </header>
+<!doctype html><html lang=""><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="/logo.png"><link rel="apple-touch-icon" href="/logo.png"><link rel="mask-icon" href="/logo.png" color="#f4b400"><meta name="description" content="Sanyue ImgHub - A modern file hosting platform"><meta name="keywords" content="Sanyue, ImgHub, file hosting, image hosting, cloud storage"><meta name="author" content="SanyueQi"><title>Sanyue ImgHub</title><script defer="defer" src="/js/app.42f0e844.js"></script><link href="/css/app.6e9711cc.css" rel="stylesheet"></head><body><noscript><strong>We're sorry but sanyue_imghub doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"></div></body></html><style>/* 下拉菜单样式 */
+.el-dropdown__popper.el-popper {
+    border-radius: 12px;
+    border: none;
+    background-color: var(--popper-bg-color);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--popper-shadow);
+}
+.el-dropdown__popper.el-popper .el-dropdown-menu {
+    background: none;
+    border: none;
+}
+.el-dropdown__popper.el-popper .el-dropdown-menu__item {
+    border: none;
+    background: none;
+}
+.el-popper.is-light>.el-popper__arrow::before {
+    background: none;
+    border: none;
+}
 
-  <!-- 主体内容 -->
-  <main class="container">
-    <!-- 上传区域 -->
-    <section class="upload-card">
-      <h2>上传图片</h2>
-      <form id="upload-form">
-        <input type="file" id="file-input" multiple />
-        <button type="submit">上传</button>
-      </form>
-      <div id="upload-progress"></div>
-    </section>
-
-    <!-- 结果展示 -->
-    <section class="result-card">
-      <h2>上传结果</h2>
-      <div id="result-list"></div>
-    </section>
-  </main>
-
-  <!-- 页脚 -->
-  <footer class="footer">
-    <p>🚀 Powered by Cloudflare & 七牛云 · UI 重构版</p>
-  </footer>
-
-  <!-- 保留原有 js -->
-  <script src="/js/app.42f0e844.js"></script>
-  <script>
-    // 简单的主题切换
-    const btn = document.getElementById("theme-toggle");
-    btn.addEventListener("click", () => {
-      document.body.classList.toggle("dark");
-    });
-  </script>
-</body>
-</html>
+/* 加载动画样式 */
+.el-loading-mask {
+    border-radius: 12px;
+}</style>
