@@ -1,0 +1,139 @@
+/* =============================
+   全局基础
+============================= */
+body, #app {
+    font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* =============================
+   卡片样式
+============================= */
+.el-card {
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+.el-card:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    transform: translateY(-2px);
+}
+
+/* =============================
+   按钮样式
+============================= */
+.el-button {
+    border-radius: 8px;
+    padding: 0 16px;
+    height: 40px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+.el-button--primary {
+    background-color: #1e88e5;
+    color: #fff;
+}
+.el-button--primary:hover {
+    background-color: #1565c0;
+    box-shadow: 0 4px 12px rgba(30,136,229,0.3);
+}
+
+/* =============================
+   输入框样式
+============================= */
+.el-input__inner {
+    border-radius: 8px;
+    border: 1px solid #dcdcdc;
+    padding: 8px 12px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.el-input__inner:focus {
+    border-color: #1e88e5;
+    box-shadow: 0 0 0 2px rgba(30,136,229,0.2);
+}
+
+/* =============================
+   下拉菜单样式
+============================= */
+.el-dropdown-menu {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    padding: 8px 0;
+}
+.el-dropdown-menu__item {
+    padding: 8px 16px;
+    transition: background 0.2s ease;
+}
+.el-dropdown-menu__item:hover {
+    background-color: rgba(30,136,229,0.05);
+}
+
+/* =============================
+   Loading 动画
+============================= */
+.el-loading-mask {
+    border-radius: 12px;
+    background-color: rgba(255,255,255,0.8);
+}
+
+/* =============================
+   滚动条美化
+============================= */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* =============================
+   弹窗样式
+============================= */
+.el-dialog {
+    border-radius: 12px;
+}
+.el-dialog__header {
+    font-weight: 600;
+    font-size: 1.1em;
+}
+.el-dialog__body {
+    padding: 20px;
+}
+
+/* =============================
+   模态背景
+============================= */
+.el-overlay {
+    background-color: rgba(0,0,0,0.3);
+}
+
+/* =============================
+   表单控件统一
+============================= */
+.el-select .el-input__inner,
+.el-date-editor .el-input__inner,
+.el-time-editor .el-input__inner {
+    border-radius: 8px;
+    border: 1px solid #dcdcdc;
+}
+
+/* =============================
+   按钮悬浮阴影动画
+============================= */
+.el-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(30,136,229,0.25);
+}
