@@ -1,25 +1,720 @@
-<!doctype html><html lang=""><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="/logo.png"><link rel="apple-touch-icon" href="/logo.png"><link rel="mask-icon" href="/logo.png" color="#f4b400"><meta name="description" content="Sanyue ImgHub - A modern file hosting platform"><meta name="keywords" content="Sanyue, ImgHub, file hosting, image hosting, cloud storage"><meta name="author" content="SanyueQi"><title>Sanyue ImgHub</title><script defer="defer" src="/js/app.42f0e844.js"></script><link href="/css/app.6e9711cc.css" rel="stylesheet"></head><body><noscript><strong>We're sorry but sanyue_imghub doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"></div></body></html><style>/* 下拉菜单样式 */
-.el-dropdown__popper.el-popper {
-    border-radius: 12px;
-    border: none;
-    background-color: var(--popper-bg-color);
-    backdrop-filter: blur(10px);
-    box-shadow: var(--popper-shadow);
-}
-.el-dropdown__popper.el-popper .el-dropdown-menu {
-    background: none;
-    border: none;
-}
-.el-dropdown__popper.el-popper .el-dropdown-menu__item {
-    border: none;
-    background: none;
-}
-.el-popper.is-light>.el-popper__arrow::before {
-    background: none;
-    border: none;
-}
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudFlare Image Bed - 现代化图像托管平台</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --secondary: #94a3b8;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border: #e2e8f0;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
 
-/* 加载动画样式 */
-.el-loading-mask {
-    border-radius: 12px;
-}</style>
+        [data-theme="dark"] {
+            --background: #0f172a;
+            --surface: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border: #334155;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--background);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: var(--transition);
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(at 47% 33%, rgba(99, 102, 241, 0.05) 0, transparent 59%),
+                radial-gradient(at 82% 65%, rgba(168, 85, 247, 0.05) 0, transparent 55%);
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: var(--shadow-md);
+            border-radius: var(--radius);
+        }
+
+        [data-theme="dark"] .glass {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* 导航栏样式 */
+        .navbar {
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.25rem;
+            transition: var(--transition);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--text-primary);
+        }
+
+        [data-theme="dark"] .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* 主内容区样式 */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        /* 侧边栏样式 */
+        .sidebar {
+            padding: 1.5rem;
+            height: fit-content;
+        }
+
+        .sidebar-section {
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .sidebar-link:hover {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+        }
+
+        .sidebar-link.active {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+        }
+
+        .sidebar-icon {
+            font-size: 1.25rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* 仪表板卡片样式 */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            padding: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+        }
+
+        .card-value {
+            font-size: 1.875rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .positive {
+            color: var(--success);
+        }
+
+        .negative {
+            color: var(--error);
+        }
+
+        /* 上传区域样式 */
+        .upload-area {
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .upload-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .upload-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .upload-button {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .upload-button:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        /* 图片网格样式 */
+        .images-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .image-item {
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .image-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .image-thumb {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .image-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            padding: 1rem;
+            color: white;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .image-item:hover .image-overlay {
+            opacity: 1;
+        }
+
+        .image-name {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .image-meta {
+            font-size: 0.875rem;
+            opacity: 0.8;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .image-actions {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            display: flex;
+            gap: 0.5rem;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .image-item:hover .image-actions {
+            opacity: 1;
+        }
+
+        .image-action {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .image-action:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* 页脚样式 */
+        .footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 968px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .images-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar glass">
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <img src="logo.png" alt="CloudFlare ImgBed Logo">
+                <span>ImgBed</span>
+            </a>
+            
+            <div class="nav-links">
+                <a href="#" class="nav-link">首页</a>
+                <a href="#" class="nav-link">图库</a>
+                <a href="#" class="nav-link">文档</a>
+                <a href="#" class="nav-link">设置</a>
+                <button class="theme-toggle" id="themeToggle">🌙</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="main-content">
+            <!-- 侧边栏 -->
+            <aside class="sidebar glass">
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">管理</h3>
+                    <ul class="sidebar-menu">
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link active">
+                                <span class="sidebar-icon">📊</span>
+                                <span>仪表板</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">
+                                <span class="sidebar-icon">🖼️</span>
+                                <span>所有图片</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">
+                                <span class="sidebar-icon">📤</span>
+                                <span>上传</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">
+                                <span class="sidebar-icon">📂</span>
+                                <span>相册</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">工具</h3>
+                    <ul class="sidebar-menu">
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">
+                                <span class="sidebar-icon">🔗</span>
+                                <span>API 设置</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">
+                                <span class="sidebar-icon">⚙️</span>
+                                <span>系统配置</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">
+                                <span class="sidebar-icon">🛡️</span>
+                                <span>安全设置</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">
+                                <span class="sidebar-icon">📝</span>
+                                <span>使用统计</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+
+            <!-- 主内容区 -->
+            <main>
+                <!-- 仪表板卡片 -->
+                <div class="dashboard">
+                    <div class="card glass">
+                        <div class="card-header">
+                            <h3 class="card-title">总图片数</h3>
+                            <div class="card-icon">📸</div>
+                        </div>
+                        <div class="card-value">1,247</div>
+                        <div class="card-footer positive">
+                            <span>↑ 12%</span>
+                            <span>过去30天</span>
+                        </div>
+                    </div>
+                    
+                    <div class="card glass">
+                        <div class="card-header">
+                            <h3 class="card-title">存储使用</h3>
+                            <div class="card-icon">💾</div>
+                        </div>
+                        <div class="card-value">3.2 GB</div>
+                        <div class="card-footer">
+                            <span class="positive">↑ 5%</span>
+                            <span>总容量 10GB</span>
+                        </div>
+                    </div>
+                    
+                    <div class="card glass">
+                        <div class="card-header">
+                            <h3 class="card-title">今日流量</h3>
+                            <div class="card-icon">🌐</div>
+                        </div>
+                        <div class="card-value">42 GB</div>
+                        <div class="card-footer negative">
+                            <span>↓ 3%</span>
+                            <span>与昨日相比</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 上传区域 -->
+                <div class="upload-area glass" id="uploadArea">
+                    <div class="upload-icon">📁</div>
+                    <h2 class="upload-title">拖放文件到此处上传</h2>
+                    <p class="upload-subtitle">支持JPG, PNG, GIF, WEBP格式，最大20MB</p>
+                    <button class="upload-button">选择文件</button>
+                </div>
+
+                <!-- 图片网格 -->
+                <h2 style="margin-bottom: 1rem;">最近上传</h2>
+                <div class="images-grid">
+                    <!-- 图片项 -->
+                    <div class="image-item glass">
+                        <img src="https://via.placeholder.com/300x200?text=示例图片1" alt="示例图片" class="image-thumb">
+                        <div class="image-overlay">
+                            <div class="image-name">landscape.jpg</div>
+                            <div class="image-meta">
+                                <span>2.4 MB</span>
+                                <span>3天前</span>
+                            </div>
+                        </div>
+                        <div class="image-actions">
+                            <button class="image-action">📋</button>
+                            <button class="image-action">⤵️</button>
+                            <button class="image-action">🗑️</button>
+                        </div>
+                    </div>
+                    
+                    <div class="image-item glass">
+                        <img src="https://via.placeholder.com/300x200?text=示例图片2" alt="示例图片" class="image-thumb">
+                        <div class="image-overlay">
+                            <div class="image-name">portrait.png</div>
+                            <div class="image-meta">
+                                <span>1.8 MB</span>
+                                <span>1周前</span>
+                            </div>
+                        </div>
+                        <div class="image-actions">
+                            <button class="image-action">📋</button>
+                            <button class="image-action">⤵️</button>
+                            <button class="image-action">🗑️</button>
+                        </div>
+                    </div>
+                    
+                    <div class="image-item glass">
+                        <img src="https://via.placeholder.com/300x200?text=示例图片3" alt="示例图片" class="image-thumb">
+                        <div class="image-overlay">
+                            <div class="image-name">design.webp</div>
+                            <div class="image-meta">
+                                <span>980 KB</span>
+                                <span>2周前</span>
+                            </div>
+                        </div>
+                        <div class="image-actions">
+                            <button class="image-action">📋</button>
+                            <button class="image-action">⤵️</button>
+                            <button class="image-action">🗑️</button>
+                        </div>
+                    </div>
+                    
+                    <div class="image-item glass">
+                        <img src="https://via.placeholder.com/300x200?text=示例图片4" alt="示例图片" class="image-thumb">
+                        <div class="image-overlay">
+                            <div class="image-name">photo.jpeg</div>
+                            <div class="image-meta">
+                                <span>3.1 MB</span>
+                                <span>3周前</span>
+                            </div>
+                        </div>
+                        <div class="image-actions">
+                            <button class="image-action">📋</button>
+                            <button class="image-action">⤵️</button>
+                            <button class="image-action">🗑️</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>© 2023 CloudFlare ImgBed | 基于 Cloudflare Workers 和 Pages 构建</p>
+        </div>
+    </footer>
+
+    <script>
+        // 主题切换功能
+        const themeToggle = document.getElementById('themeToggle');
+        const htmlElement = document.documentElement;
+        
+        // 检查本地存储的主题偏好
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        htmlElement.setAttribute('data-theme', savedTheme);
+        updateThemeToggleText();
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            htmlElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            updateThemeToggleText();
+        });
+        
+        function updateThemeToggleText() {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            themeToggle.textContent = currentTheme === 'light' ? '🌙' : '☀️';
+        }
+        
+        // 上传区域交互效果
+        const uploadArea = document.getElementById('uploadArea');
+        
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = 'var(--primary)';
+            uploadArea.style.transform = 'scale(1.02)';
+        });
+        
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.borderColor = 'var(--border)';
+            uploadArea.style.transform = 'scale(1)';
+        });
+        
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = 'var(--border)';
+            uploadArea.style.transform = 'scale(1)';
+            // 这里处理文件上传逻辑
+            console.log('文件已放下，准备上传');
+        });
+    </script>
+</body>
+</html>
